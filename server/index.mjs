@@ -3,6 +3,7 @@ import fastifyStatic from '@fastify/static';
 import path from 'path';
 import url from 'url';
 import mongoose from 'mongoose';
+import Todo from './Todo.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,32 @@ app.register(fastifyStatic, {
 
 app.get('/api/user', (req, res) => {
   res.send({ id: 'fyt4v7s2j7fh', name: 'John Doe', age: 30, role: 'admin' });
+});
+
+app.get('/api/todo-list', (req, res) => {
+  return Todo.find()
+    .then(data => {
+      return res.send(data);
+    });
+});
+
+app.post('/api/todo', (req, res) => {
+  const { text, isDone } = req.body;
+  console.log('new todo:', text, isDone);
+
+  const todo = new Todo({
+    text,
+    isDone
+  });
+
+  return todo.save()
+    .then(newTodo => {
+      console.log('new todo is created', newTodo);
+      return res.send(newTodo);
+    })
+    .catch(() => {
+      console.log('new todo is failed to create');
+    });
 });
 
 const port = process.env.PORT || 5555;
