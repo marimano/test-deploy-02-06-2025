@@ -6,6 +6,7 @@ import LanguageContext from "./components/LanguageContext";
 import { languages } from "./components/Translates";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
+import TodoList from "./components/todolist/TodoList";
 
 class App extends React.Component {
   constructor(props) {
@@ -135,6 +136,7 @@ export default () => {
           <Route path="product" element={<div>{currentLanguage.tree.ourProductIsGreat}</div>}/>
         </Route>
         <Route path="/contacts" element={<div>{currentLanguage.tree.dniproUkraine}</div>} />
+        <Route path="/todos" element={<TodoList/>} />
         <Route path='*' element={<div>{currentLanguage.tree.oopsNoSuchPage}</div>}/>
       </Routes>
     </LanguageContext.Provider>
