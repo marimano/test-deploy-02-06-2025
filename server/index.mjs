@@ -56,6 +56,10 @@ app.post('/api/todo', (req, res) => {
     });
 });
 
+app.setNotFoundHandler((req, res) => {
+  res.sendFile('index.html');
+});
+
 const port = process.env.PORT || 5555;
 const host = process.env.HOST || 'localhost';
 
